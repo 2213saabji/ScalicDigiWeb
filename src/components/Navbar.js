@@ -3,9 +3,10 @@ import { ArrowRight, Icon, Logo } from "@/components/icons";
 
 export const navLinks = [
   { href: "/services", label: "Services" },
+  { href: "/process", label: "Process" },
   { href: "/work", label: "Our Work" },
-  { href: "/#process", label: "Process" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 
