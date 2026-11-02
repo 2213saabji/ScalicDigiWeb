@@ -7,7 +7,7 @@ import WhyUs from "@/components/home/WhyUs";
 import Pricing from "@/components/home/Pricing";
 import Faq from "@/components/home/Faq";
 import Contact from "@/components/home/Contact";
-import Footer from "@/components/home/Footer";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (

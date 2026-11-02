@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight } from "@/components/icons";
 import { Eyebrow, SectionTitle } from "./SectionHeading";
 
@@ -10,9 +11,9 @@ export default function Work() {
             <Eyebrow>Selected work</Eyebrow>
             <SectionTitle>Websites we&apos;ve launched</SectionTitle>
           </div>
-          <a href="#work" className="inline-flex min-h-11 items-center gap-2 font-semibold underline">
+          <Link href="/work" className="inline-flex min-h-11 items-center gap-2 font-semibold underline">
             View all projects <ArrowRight />
-          </a>
+          </Link>
         </div>
 
         {/* Featured project */}
@@ -32,9 +33,9 @@ export default function Work() {
                 </span>
               ))}
             </div>
-            <a href="#work" className="inline-flex min-h-11 items-center gap-2 font-semibold text-navy underline">
+            <Link href="/work#case-study" className="inline-flex min-h-11 items-center gap-2 font-semibold text-navy underline">
               Read case study <ArrowRight />
-            </a>
+            </Link>
           </div>
           <div className="min-w-0 flex-[1.4_1_420px] overflow-hidden rounded-2xl bg-white shadow-[0_24px_60px_rgba(74,36,18,0.18)]">
             <div className="flex gap-1.5 border-b border-line px-3.5 py-3">

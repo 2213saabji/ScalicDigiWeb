@@ -1,17 +1,23 @@
-name: CI
+name: CI/CD
 
-# Deployments are handled by Vercel's Git integration:
-# pushes to main deploy to production, PRs get preview deployments.
+# Lints every push and PR, then deploys to Vercel:
+#   push to main  -> production
+#   PR into main  -> preview (URL is commented on the PR)
+# Needs one repo secret: VERCEL_TOKEN (from the Vercel account that owns the project).
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  VERCEL_PROJECT: scalic-digital-web
 
 jobs:
   lint:
@@ -22,5 +28,59 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22
-      - run: npm install
+          cache: npm
+      - run: npm ci
       - run: npm run lint
+
+  deploy:
+    name: Deploy (${{ github.event_name == 'pull_request' && 'preview' || 'production' }})
+    needs: lint
+    # Fork PRs don't get repo secrets, so skip deploying them.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
+      url: ${{ steps.deploy.outputs.url }}
+    permissions:
+      contents: read
+      pull-requests: write
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ENV: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
+      PROD_FLAG: ${{ github.event_name == 'pull_request' && '' || '--prod' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Link Vercel project
+        run: vercel link --yes --project "$VERCEL_PROJECT" --token "$VERCEL_TOKEN"
+
+      - name: Pull Vercel environment
+        run: vercel pull --yes --environment="$VERCEL_ENV" --token "$VERCEL_TOKEN"
+
+      - name: Build
+        run: vercel build $PROD_FLAG --token "$VERCEL_TOKEN"
+
+      - name: Deploy
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt $PROD_FLAG --token "$VERCEL_TOKEN")
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Deployed to $url" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Comment preview URL on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🚀 Preview deployed: ${{ steps.deploy.outputs.url }}`,
+            });
