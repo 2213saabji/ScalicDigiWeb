@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { ArrowRight } from "@/components/icons";
+import { contact, contactLinks } from "@/lib/contact";
 import { Eyebrow } from "./SectionHeading";
 
 export default function Contact() {
@@ -16,17 +18,17 @@ export default function Contact() {
           </p>
         </div>
         <div className="flex flex-col gap-3.5">
-          <a
-            href="mailto:[your-email]"
+          <Link
+            href="/contact"
             className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full bg-orange px-8 py-4.5 text-[17px] font-semibold text-navy"
           >
             Get my free audit <ArrowRight size={18} />
-          </a>
+          </Link>
           <a
-            href="tel:[your-phone]"
+            href={contactLinks.phone}
             className="inline-flex min-h-11 items-center justify-center rounded-full border-[1.5px] border-white px-8 py-4.5 text-[17px] font-semibold text-white hover:bg-white hover:text-navy"
           >
-            Call [your phone]
+            Call {contact.phone}
           </a>
         </div>
       </div>

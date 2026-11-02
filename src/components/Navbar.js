@@ -5,8 +5,8 @@ export const navLinks = [
   { href: "/services", label: "Services" },
   { href: "/work", label: "Our Work" },
   { href: "/#process", label: "Process" },
-  { href: "/#pricing", label: "Pricing" },
-  { href: "/#faq", label: "FAQ" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Navbar({ current }) {
@@ -34,7 +34,7 @@ export default function Navbar({ current }) {
           ))}
         </div>
         <Link
-          href="/#contact"
+          href="/contact"
           className="hidden min-h-11 items-center gap-2 rounded-full bg-orange px-5.5 py-3 font-semibold text-navy sm:inline-flex"
         >
           Free audit <ArrowRight />
@@ -60,7 +60,7 @@ export default function Navbar({ current }) {
                 {link.label}
               </Link>
             ))}
-            <Link href="/#contact" className="mt-1 rounded-full bg-orange px-4 py-3 text-center font-semibold text-navy">
+            <Link href="/contact" className="mt-1 rounded-full bg-orange px-4 py-3 text-center font-semibold text-navy">
               Free audit
             </Link>
           </div>

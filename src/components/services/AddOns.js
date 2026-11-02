@@ -67,7 +67,7 @@ export default function AddOns() {
               Extras when you need them
             </h2>
           </div>
-          <Link href="/#pricing" className="inline-flex min-h-11 items-center font-semibold underline">
+          <Link href="/pricing#add-ons" className="inline-flex min-h-11 items-center font-semibold underline">
             Add-on pricing →
           </Link>
         </div>

@@ -8,7 +8,7 @@ export default function Cta({ title, label, className = "py-24" }) {
           {title}
         </h2>
         <Link
-          href="/#contact"
+          href="/contact"
           className="inline-flex min-h-11 items-center rounded-full bg-navy px-7.5 py-4.5 text-[17px] font-semibold text-white"
         >
           {label}

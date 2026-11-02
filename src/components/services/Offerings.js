@@ -149,12 +149,12 @@ export default function Offerings() {
         </ul>
         <div className="mt-1.5 flex flex-wrap gap-3">
           <Link
-            href="/#contact"
+            href="/contact"
             className="inline-flex min-h-11 items-center rounded-full bg-navy px-6 py-3.5 font-semibold text-white"
           >
             {cta}
           </Link>
-          <Link href="/#pricing" className="inline-flex min-h-11 items-center px-2 font-semibold underline">
+          <Link href="/pricing" className="inline-flex min-h-11 items-center px-2 font-semibold underline">
             See pricing →
           </Link>
         </div>
